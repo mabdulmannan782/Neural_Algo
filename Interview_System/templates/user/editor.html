@@ -1,0 +1,35 @@
+{% extends "user/base.html" %}
+{% load static %}
+{% block user_title %}Code Editor{% endblock user_title %}
+{% block user_body %}
+<div class="container m-5 bg-dark p-5">
+{% comment %} editor link {% endcomment %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+
+  <h2 class="text-light">Question: {{ question.title }}</h2>
+  <p>{{ question.description }}</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <textarea id="code" name="code">{{ default_code }}</textarea>
+    <br>
+    <button class="btn btn-info" type="submit">Submit</button>
+  </form>
+
+  {% if message %}
+    <h3>Result:</h3>
+    <p>{{ message }}</p>
+  {% endif %}
+</div>
+
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "python",
+      theme: "default"
+    });
+  </script>
+{% endblock user_body %}
+

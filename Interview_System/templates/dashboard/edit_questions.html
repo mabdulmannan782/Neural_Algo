@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block admin_title %}Edit Questions{% endblock admin_title%}
+{% block admin_body %}
+<div class="container  mt-4">
+    <div class="card shadow bg-secondary rounded">
+        <div class="card-header text-center pt-5 text-white">
+            <h4>Edit DSA Question</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group pt-3">
+                    <label for="question_text">Question</label>
+                    <textarea class="form-control" id="question_text" name="question_text" rows="4" placeholder="Enter DSA question" required>{{ question.question_text }}</textarea>
+                </div>
+                <div class="form-group pt-3">
+                    <label for="difficulty">Difficulty</label>
+                    <select class="form-control bg-secondary" id="difficulty" name="difficulty" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="Easy"{% if question.difficulty == "Easy" %}selected{% endif %}>Easy</option>
+                        <option value="Medium" {% if question.difficulty == "Medium" %}selected{% endif %}>Medium</option>
+                        <option value="Hard" {% if question.difficulty == "Hard" %}selected{% endif %}>Hard</option>
+                    </select>
+                </div>
+                <div class="form-group pt-3">
+                    <label for="topic">Topic</label>
+                    <input type="text" class="form-control" id="topic" name="topic" placeholder="e.g. Array, Stack, Graph" value="{{ question.topic }}" required>
+                </div>
+                <div class="form-group pt-3">
+                    <label for="answer">Answer (optional)</label>
+                    <textarea class="form-control" id="answer" name="answer" rows="2" placeholder="Enter answer or leave blank">{{ question.answer }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Update Question</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock admin_body %}

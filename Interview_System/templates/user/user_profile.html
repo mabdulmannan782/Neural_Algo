@@ -1,0 +1,25 @@
+{% extends "user/base.html" %}
+{% block user_title %}Profile{% endblock user_title %}
+{% block user_body %}
+<div class="container mt-4">
+    <div class="bg-secondary rounded p-5">
+        <h4>Update Profile</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label>First Name</label>
+                <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
+            </div>
+            <div class="mb-3">
+                <label>Last Name</label>
+                <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" value="{{ user.email }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock user_body %}

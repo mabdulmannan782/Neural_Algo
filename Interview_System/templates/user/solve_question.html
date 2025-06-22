@@ -1,0 +1,46 @@
+{% extends "user/base.html" %}
+{% block user_title %}Solve Question{% endblock user_title %}
+{% block user_body %}
+{% comment %} <div class="container mt-4">
+    <h4>{{ question.question_text }}</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Submit Answer</button>
+    </form>
+</div> {% endcomment %}
+<div class="container m-5 bg-dark p-5">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+
+  <h2 class="text-light">Question: {{ question.question_text }}</h2>
+  <br />
+
+  <form method="POST">
+    {% csrf_token %}
+    <textarea id="code" name="code">{{ default_code }}</textarea>
+    <br>
+    <button type="submit" class="btn btn-success">Submit Answer</button>
+  </form>
+
+  {% if result %} 
+    <h3 class="mt-4">Result: 
+      {% if result == "Pass" %} 
+        <span class="badge bg-success">Pass</span> 
+      {% else %} 
+        <span class="badge bg-danger">Fail</span> 
+      {% endif %}
+    </h3> 
+  {% endif %}
+</div>
+
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "python",
+      theme: "default",
+        indentUnit: 4,
+    });
+  </script>
+{% endblock user_body %}

@@ -1,0 +1,39 @@
+{% extends "user/base.html" %}
+{% block user_title %}User Dashboard{% endblock user_title %}
+{% block user_body %}
+<div class="container mt-4">
+    <div class="bg-secondary rounded p-5">
+        <h4>Welcome, {{ user.get_full_name|default:user.username }}</h4>
+        <p>Total Attempted: {{ total }} | Passed: {{ passed }} | Failed: {{ failed }}</p>
+        <a href="{% url 'solve_questions' %}" class="btn btn-primary mb-3">Solve Questions</a>
+        <a href="{% url 'user_profile' %}" class="btn btn-secondary mb-3">Profile</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ans in answers %}
+                <tr>
+                    <td>{{ ans.question.question_text|truncatechars:50 }}</td>
+                    <td>{{ ans.user_answer }}</td>
+                    <td>
+                        {% if ans.is_correct %}
+                            <span class="badge bg-success">Pass</span>
+                        {% else %}
+                            <span class="badge bg-danger">Fail</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No attempts yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+{% endblock user_body %}

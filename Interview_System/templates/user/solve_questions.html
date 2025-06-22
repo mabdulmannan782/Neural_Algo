@@ -1,0 +1,19 @@
+{% extends "user/base.html" %}
+{% block user_title %}Solve Questions{% endblock user_title %}
+{% block user_body %}
+<div class="container mt-4">
+    <div class="bg-secondary rounded p-5">
+        <h4>Available Questions</h4>
+        <ul class="list-group">
+            {% for question in questions %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ question.question_text|truncatechars:60 }}
+                <a href="{% url 'solve_question' question.id %}" class="btn btn-sm btn-primary">Solve</a>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No questions available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock user_body %}
